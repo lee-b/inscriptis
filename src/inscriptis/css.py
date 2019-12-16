@@ -150,6 +150,8 @@ DEFAULT_CSS = {
     'figure': HtmlElement('figure', display=Display.block, margin_before=1, margin_after=1),
 
 
+    'pre': HtmlElement('pre', display=Display.block, whitespace=WhiteSpace.pre, margin_before=1, margin_after=1),
+
     'h1': HtmlElement('h1', display=Display.block, margin_before=1, margin_after=1),
     'h2': HtmlElement('h2', display=Display.block, margin_before=1, margin_after=1),
     'h3': HtmlElement('h3', display=Display.block, margin_before=1, margin_after=1),

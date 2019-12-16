@@ -54,6 +54,7 @@ class Inscriptis(object):
             'ol': self.start_ol,
             'li': self.start_li,
             'br': self.newline,
+            'pre': self.start_pre,
             'a': self.start_a if display_links else None,
             'img': self.start_img if display_images else None,
         }
@@ -63,6 +64,7 @@ class Inscriptis(object):
             'ol': self.end_ol,
             'td': self.end_td,
             'th': self.end_td,
+            'pre': self.end_pre,
             'a': self.end_a if display_links else None,
         }
 
@@ -130,6 +132,7 @@ class Inscriptis(object):
         self.clean_text_lines[-1].append(line)
         self.current_line[-1] = self.next_line[-1]
         self.next_line[-1] = Line()
+
         return True
 
     def write_line_verbatim(self, text):
@@ -191,7 +194,10 @@ class Inscriptis(object):
 
         # protect pre areas
         if self.current_tag[-1].whitespace == WhiteSpace.pre:
-            data = '\0' + data + '\0'
+            lines = data.split("\n")
+            for l in lines:
+                self.write_line_verbatim(l)
+            return
 
         # add prefix, if present
         data = self.current_tag[-1].prefix + data + self.current_tag[-1].suffix
@@ -228,6 +234,12 @@ class Inscriptis(object):
     def end_ol(self):
         self.li_level -= 1
         self.li_counter.pop()
+
+    def start_pre(self, attrs):
+        pass
+
+    def end_pre(self):
+        pass
 
     def start_li(self, attrs):
         self.write_line()
